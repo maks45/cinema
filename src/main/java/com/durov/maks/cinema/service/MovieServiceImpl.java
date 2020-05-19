@@ -7,7 +7,7 @@ import com.durov.maks.cinema.lib.Service;
 import com.durov.maks.cinema.model.Movie;
 
 @Service
-public class MovieServiceImpl implements MovieService{
+public class MovieServiceImpl implements MovieService {
     @Inject
     private MovieDao movieDao;
 

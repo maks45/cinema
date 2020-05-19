@@ -16,28 +16,28 @@ public class MovieDaoImpl implements MovieDao {
 
     public Movie add(Movie movie) {
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Long itemId = (Long) session.save(movie);
             transaction.commit();
             movie.setId(itemId);
-        }catch (HibernateException e){
-            if(transaction != null){
+        } catch (HibernateException e) {
+            if (transaction != null) {
                 transaction.rollback();
             }
-            throw  new RuntimeException("can't save movie entity", e);
+            throw new RuntimeException("can't save movie entity", e);
         }
         return movie;
     }
 
     public List<Movie> getAll() {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(Movie.class);
             criteriaQuery.from(Movie.class);
             return session.createQuery(criteriaQuery).getResultList();
-        }catch (HibernateException e){
-            throw  new RuntimeException("can't save movie entity", e);
+        } catch (HibernateException e) {
+            throw new RuntimeException("can't save movie entity", e);
         }
     }
 }
