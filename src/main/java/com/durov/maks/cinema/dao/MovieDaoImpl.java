@@ -1,10 +1,10 @@
 package com.durov.maks.cinema.dao;
 
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
 import com.durov.maks.cinema.lib.Dao;
 import com.durov.maks.cinema.model.Movie;
 import com.durov.maks.cinema.util.HibernateUtil;
+import java.util.List;
+import javax.persistence.criteria.CriteriaQuery;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
