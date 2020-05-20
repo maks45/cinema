@@ -36,7 +36,7 @@ public class MovieDaoImpl implements MovieDao {
             criteriaQuery.from(Movie.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (HibernateException e) {
-            throw new RuntimeException("can't save movie entity", e);
+            throw new RuntimeException("can't get all movies entity", e);
         }
     }
 }
