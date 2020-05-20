@@ -26,7 +26,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     date.atStartOfDay()));
             return session.createQuery(query).getResultList();
         } catch (HibernateException e) {
-            throw new RuntimeException("can't get movie sessions", e);
+            throw new RuntimeException("can't find available Sessions ", e);
         }
     }
 
