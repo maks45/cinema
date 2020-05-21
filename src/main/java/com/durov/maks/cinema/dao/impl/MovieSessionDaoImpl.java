@@ -1,6 +1,7 @@
 package com.durov.maks.cinema.dao.impl;
 
 import com.durov.maks.cinema.dao.MovieSessionDao;
+import com.durov.maks.cinema.exceptions.DataProcessingException;
 import com.durov.maks.cinema.lib.Dao;
 import com.durov.maks.cinema.model.MovieSession;
 import com.durov.maks.cinema.util.HibernateUtil;
@@ -26,23 +27,29 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     date.atStartOfDay()));
             return session.createQuery(query).getResultList();
         } catch (HibernateException e) {
-            throw new RuntimeException("can't find available Sessions ", e);
+            throw new DataProcessingException("can't find available Sessions ", e);
         }
     }
 
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Long movieId = (Long) session.save(movieSession);
-            movieSession.setId(movieId);
+            Long movieSessionId = (Long) session.save(movieSession);
+            movieSession.setId(movieSessionId);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("can't save movie session entity", e);
+            throw new DataProcessingException("can't save movie session entity", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return movieSession;
     }

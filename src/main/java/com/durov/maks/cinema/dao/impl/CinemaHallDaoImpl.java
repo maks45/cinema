@@ -1,6 +1,7 @@
 package com.durov.maks.cinema.dao.impl;
 
 import com.durov.maks.cinema.dao.CinemaHallDao;
+import com.durov.maks.cinema.exceptions.DataProcessingException;
 import com.durov.maks.cinema.lib.Dao;
 import com.durov.maks.cinema.model.CinemaHall;
 import com.durov.maks.cinema.util.HibernateUtil;
@@ -15,16 +16,22 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Long movieId = (Long) session.save(cinemaHall);
-            cinemaHall.setId(movieId);
+            Long cinemaHallId = (Long) session.save(cinemaHall);
+            cinemaHall.setId(cinemaHallId);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("can't save cinema hall entity", e);
+            throw new DataProcessingException("can't save cinema hall entity", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return cinemaHall;
     }
@@ -37,7 +44,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             criteriaQuery.from(CinemaHall.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (HibernateException e) {
-            throw new RuntimeException("can't get all cinema hall entity", e);
+            throw new DataProcessingException("can't get all cinema hall entity", e);
         }
     }
 }
