@@ -1,9 +1,10 @@
-package com.durov.maks.cinema.service;
+package com.durov.maks.cinema.service.impl;
 
 import com.durov.maks.cinema.dao.MovieDao;
 import com.durov.maks.cinema.lib.Inject;
 import com.durov.maks.cinema.lib.Service;
 import com.durov.maks.cinema.model.Movie;
+import com.durov.maks.cinema.service.MovieService;
 import java.util.List;
 
 @Service

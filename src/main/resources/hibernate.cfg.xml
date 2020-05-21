@@ -14,6 +14,8 @@
         <property name="hbm2ddl.auto">create-drop</property>
 
         <mapping class="com.durov.maks.cinema.model.Movie" />
+        <mapping class="com.durov.maks.cinema.model.MovieSession" />
+        <mapping class="com.durov.maks.cinema.model.CinemaHall" />
     </session-factory>
 
 </hibernate-configuration>
