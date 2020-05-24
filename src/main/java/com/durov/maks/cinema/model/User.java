@@ -1,17 +1,19 @@
 package com.durov.maks.cinema.model;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Objects;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String email;
     private String login;
     private String password;
     private byte[] salt;
@@ -24,12 +26,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLogin() {
@@ -65,21 +67,21 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return name.equals(user.name)
+        return email.equals(user.email)
                 && login.equals(user.login)
                 && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, login, password);
+        return Objects.hash(id, email, login, password);
     }
 
     @Override
     public String toString() {
         return "User{"
                 + "id=" + id
-                + ", name='" + name + '\''
+                + ", name='" + email + '\''
                 + ", login='" + login + '\''
                 + ", password='" + password + '\''
                 + '}';
