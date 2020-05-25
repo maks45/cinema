@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
             Root<User> userRoot = criteriaQuery.from(User.class);
             criteriaQuery.select(userRoot).where(criteriaBuilder
                     .equal(userRoot.get("email"), email));
-            return session.createQuery(criteriaQuery).getSingleResult();
+            return session.createQuery(criteriaQuery).uniqueResult();
         } catch (HibernateException e) {
             throw new DataProcessingException("can't get all movies entity", e);
         }

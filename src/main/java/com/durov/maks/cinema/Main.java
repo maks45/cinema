@@ -44,6 +44,6 @@ public class Main {
         AuthenticationService authService =
                 (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
         User user = authService.register("maksim.durov45@gmail.com","maks45", "1111");
-        System.out.println(authService.login(user.getEmail(), "1111"));
+        System.out.println(authService.login("maksim.durov45@gmail.com", "1111"));
     }
 }
