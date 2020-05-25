@@ -4,10 +4,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import org.apache.log4j.Logger;
+import com.durov.maks.cinema.exceptions.AuthenticationException;
 
 public class HashUtil {
-    private static final Logger logger =
-            Logger.getLogger(com.durov.maks.cinema.util.HashUtil.class);
 
     public static byte[] getSalt() {
         SecureRandom random = new SecureRandom();
@@ -26,7 +25,7 @@ public class HashUtil {
                 hashedPassword.append(String.format("%02x",b));
             }
         } catch (NoSuchAlgorithmException e) {
-            logger.error(e);
+            throw new AuthenticationException("can't hashing password", e);
         }
         return hashedPassword.toString();
     }
