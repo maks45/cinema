@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-
     public Movie add(Movie movie) {
         Transaction transaction = null;
         Session session = null;
