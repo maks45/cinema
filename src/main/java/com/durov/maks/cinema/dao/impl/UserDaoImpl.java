@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import java.util.Optional;
 
 @Dao
 public class UserDaoImpl implements UserDao {
@@ -37,14 +38,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
             Root<User> userRoot = criteriaQuery.from(User.class);
             criteriaQuery.select(userRoot).where(criteriaBuilder
                     .equal(userRoot.get("email"), email));
-            return session.createQuery(criteriaQuery).uniqueResult();
+            return session.createQuery(criteriaQuery).getResultStream().findFirst();
         } catch (HibernateException e) {
             throw new DataProcessingException("can't get all movies entity", e);
         }
