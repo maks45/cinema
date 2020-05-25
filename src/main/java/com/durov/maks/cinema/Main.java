@@ -1,9 +1,12 @@
 package com.durov.maks.cinema;
 
+import com.durov.maks.cinema.exceptions.AuthenticationException;
 import com.durov.maks.cinema.lib.Injector;
 import com.durov.maks.cinema.model.CinemaHall;
 import com.durov.maks.cinema.model.Movie;
 import com.durov.maks.cinema.model.MovieSession;
+import com.durov.maks.cinema.model.User;
+import com.durov.maks.cinema.security.AuthenticationService;
 import com.durov.maks.cinema.service.CinemaHallService;
 import com.durov.maks.cinema.service.MovieService;
 import com.durov.maks.cinema.service.MovieSessionService;
@@ -13,7 +16,7 @@ import java.util.List;
 public class Main {
     private static final Injector INJECTOR = Injector.getInstance("com.durov.maks.cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
@@ -38,5 +41,9 @@ public class Main {
         availableSessions.forEach(System.out::println);
         movies.forEach(System.out::println);
         cinemaHalls.forEach(System.out::println);
+        AuthenticationService authService =
+                (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
+        User user = authService.register("maksim.durov45@gmail.com","maks45", "1111");
+        System.out.println(authService.login("maksim.durov45@gmail.com", "1111"));
     }
 }
