@@ -17,6 +17,8 @@
         <mapping class="com.durov.maks.cinema.model.MovieSession" />
         <mapping class="com.durov.maks.cinema.model.CinemaHall" />
         <mapping class="com.durov.maks.cinema.model.User" />
+        <mapping class="com.durov.maks.cinema.model.ShoppingCart" />
+        <mapping class="com.durov.maks.cinema.model.Ticket" />
     </session-factory>
 
 </hibernate-configuration>
