@@ -1,10 +1,9 @@
 package com.durov.maks.cinema.util;
 
+import com.durov.maks.cinema.exceptions.AuthenticationException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import org.apache.log4j.Logger;
-import com.durov.maks.cinema.exceptions.AuthenticationException;
 
 public class HashUtil {
     private static final String HASHING_ALGORITHM = "SHA-512";

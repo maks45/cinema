@@ -10,6 +10,7 @@ import com.durov.maks.cinema.security.AuthenticationService;
 import com.durov.maks.cinema.service.CinemaHallService;
 import com.durov.maks.cinema.service.MovieService;
 import com.durov.maks.cinema.service.MovieSessionService;
+import com.durov.maks.cinema.service.ShoppingCartService;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,5 +46,11 @@ public class Main {
                 (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
         User user = authService.register("maksim.durov45@gmail.com","maks45", "1111");
         System.out.println(authService.login("maksim.durov45@gmail.com", "1111"));
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+        shoppingCartService.registerNewShoppingCart(user);
+        System.out.println(shoppingCartService.getByUser(user));
+        shoppingCartService.addSession(movieSession, user);
+        System.out.println(shoppingCartService.getByUser(user));
     }
 }
