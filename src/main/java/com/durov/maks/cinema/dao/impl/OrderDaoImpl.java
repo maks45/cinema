@@ -1,12 +1,5 @@
 package com.durov.maks.cinema.dao.impl;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import com.durov.maks.cinema.dao.OrderDao;
 import com.durov.maks.cinema.exceptions.DataProcessingException;
 import com.durov.maks.cinema.lib.Dao;
@@ -14,6 +7,13 @@ import com.durov.maks.cinema.model.Order;
 import com.durov.maks.cinema.model.User;
 import com.durov.maks.cinema.util.HibernateUtil;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
