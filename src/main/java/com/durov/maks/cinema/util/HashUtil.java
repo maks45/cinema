@@ -1,6 +1,6 @@
 package com.durov.maks.cinema.util;
 
-import com.durov.maks.cinema.exceptions.AuthenticationException;
+import com.durov.maks.cinema.exception.AuthenticationException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

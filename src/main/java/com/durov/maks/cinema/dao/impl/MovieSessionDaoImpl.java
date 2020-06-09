@@ -1,10 +1,8 @@
 package com.durov.maks.cinema.dao.impl;
 
 import com.durov.maks.cinema.dao.MovieSessionDao;
-import com.durov.maks.cinema.exceptions.DataProcessingException;
-import com.durov.maks.cinema.lib.Dao;
+import com.durov.maks.cinema.exception.DataProcessingException;
 import com.durov.maks.cinema.model.MovieSession;
-import com.durov.maks.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,13 +10,21 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private final SessionFactory sessionFactory;
+
+    public MovieSessionDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> query = criteriaBuilder.createQuery(MovieSession.class);
             Root<MovieSession> root = query.from(MovieSession.class);
@@ -36,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();

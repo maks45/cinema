@@ -1,22 +1,28 @@
 package com.durov.maks.cinema.dao.impl;
 
 import com.durov.maks.cinema.dao.TicketDao;
-import com.durov.maks.cinema.exceptions.DataProcessingException;
-import com.durov.maks.cinema.lib.Dao;
+import com.durov.maks.cinema.exception.DataProcessingException;
 import com.durov.maks.cinema.model.Ticket;
-import com.durov.maks.cinema.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class TicketDaoImpl implements TicketDao {
+    private final SessionFactory sessionFactory;
+
+    public TicketDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public Ticket add(Ticket ticket) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(ticket);
             transaction.commit();
