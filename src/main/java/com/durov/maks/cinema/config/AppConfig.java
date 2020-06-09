@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = {
+        "com.durov.maks.cinema.security",
         "com.durov.maks.cinema.service",
         "com.durov.maks.cinema.dao"
 })
@@ -42,7 +43,8 @@ public class AppConfig {
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         localSessionFactoryBean.setHibernateProperties(properties);
-        localSessionFactoryBean.setPackagesToScan("com.durov.maks.cinema.model");
+        localSessionFactoryBean.setPackagesToScan("com.durov.maks.cinema.model",
+                "com.durov.maks.cinema.security");
         return localSessionFactoryBean;
     }
 }
