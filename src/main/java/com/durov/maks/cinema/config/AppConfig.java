@@ -42,6 +42,7 @@ public class AppConfig {
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         localSessionFactoryBean.setHibernateProperties(properties);
+        localSessionFactoryBean.setPackagesToScan("com.durov.maks.cinema.model");
         return localSessionFactoryBean;
     }
 }
