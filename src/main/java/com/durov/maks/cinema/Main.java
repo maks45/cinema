@@ -1,6 +1,5 @@
 package com.durov.maks.cinema;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.durov.maks.cinema.config.AppConfig;
 import com.durov.maks.cinema.model.CinemaHall;
 import com.durov.maks.cinema.model.Movie;
@@ -12,9 +11,9 @@ import com.durov.maks.cinema.service.MovieService;
 import com.durov.maks.cinema.service.MovieSessionService;
 import com.durov.maks.cinema.service.OrderService;
 import com.durov.maks.cinema.service.ShoppingCartService;
-import com.durov.maks.cinema.service.UserService;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
@@ -43,15 +42,15 @@ public class Main {
         movies.forEach(System.out::println);
         cinemaHalls.forEach(System.out::println);
         AuthenticationService authService = context.getBean(AuthenticationService.class);
-        User user = authService.register("maksim.durov45@gmail.com","maks45", "1111");
+        User user = authService.register("maksim.durov45@gmail.com", "maks45", "1111");
         System.out.println(authService.login("maksim.durov45@gmail.com", "1111"));
-        ShoppingCartService shoppingCartService = context.getBean (ShoppingCartService.class);
+        ShoppingCartService shoppingCartService = context.getBean(ShoppingCartService.class);
         shoppingCartService.registerNewShoppingCart(user);
         System.out.println(shoppingCartService.getByUser(user));
         shoppingCartService.addSession(movieSession, user);
         System.out.println(shoppingCartService.getByUser(user));
         OrderService orderService = context.getBean(OrderService.class);
-        orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(),user);
+        orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
         orderService.getOrderHistory(user).forEach(System.out::println);
     }
 }
