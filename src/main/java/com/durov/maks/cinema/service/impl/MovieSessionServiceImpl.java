@@ -1,17 +1,19 @@
 package com.durov.maks.cinema.service.impl;
 
 import com.durov.maks.cinema.dao.MovieSessionDao;
-import com.durov.maks.cinema.lib.Inject;
-import com.durov.maks.cinema.lib.Service;
 import com.durov.maks.cinema.model.MovieSession;
 import com.durov.maks.cinema.service.MovieSessionService;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-    @Inject
-    private MovieSessionDao movieSessionDao;
+    private final MovieSessionDao movieSessionDao;
+
+    public MovieSessionServiceImpl(MovieSessionDao movieSessionDao) {
+        this.movieSessionDao = movieSessionDao;
+    }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {

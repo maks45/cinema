@@ -1,6 +1,6 @@
 package com.durov.maks.cinema.security;
 
-import com.durov.maks.cinema.exceptions.AuthenticationException;
+import com.durov.maks.cinema.exception.AuthenticationException;
 import com.durov.maks.cinema.model.User;
 
 public interface AuthenticationService {

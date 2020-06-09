@@ -1,16 +1,18 @@
 package com.durov.maks.cinema.security;
 
-import com.durov.maks.cinema.exceptions.AuthenticationException;
-import com.durov.maks.cinema.lib.Inject;
-import com.durov.maks.cinema.lib.Service;
+import com.durov.maks.cinema.exception.AuthenticationException;
 import com.durov.maks.cinema.model.User;
 import com.durov.maks.cinema.service.UserService;
 import com.durov.maks.cinema.util.HashUtil;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Inject
-    private UserService userService;
+    private final UserService userService;
+
+    public AuthenticationServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {

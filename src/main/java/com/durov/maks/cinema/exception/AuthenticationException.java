@@ -1,4 +1,4 @@
-package com.durov.maks.cinema.exceptions;
+package com.durov.maks.cinema.exception;
 
 public class AuthenticationException extends RuntimeException {
     public AuthenticationException(String message) {

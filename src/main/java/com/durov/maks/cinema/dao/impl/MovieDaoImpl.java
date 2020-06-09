@@ -1,23 +1,29 @@
 package com.durov.maks.cinema.dao.impl;
 
 import com.durov.maks.cinema.dao.MovieDao;
-import com.durov.maks.cinema.exceptions.DataProcessingException;
-import com.durov.maks.cinema.lib.Dao;
+import com.durov.maks.cinema.exception.DataProcessingException;
 import com.durov.maks.cinema.model.Movie;
-import com.durov.maks.cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieDaoImpl implements MovieDao {
+    private final SessionFactory sessionFactory;
+
+    public MovieDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public Movie add(Movie movie) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(movie);
             transaction.commit();
@@ -35,7 +41,7 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     public List<Movie> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(Movie.class);
             criteriaQuery.from(Movie.class);
