@@ -71,7 +71,7 @@ public class ShoppingCartController {
 
     private MovieSession getMovieSession(MovieSessionResponseDto movieSessionResponseDto) {
         MovieSession movieSession = new MovieSession();
-        movieSession.setId(movieSessionResponseDto.getMovieId());
+        movieSession.setId(movieSessionResponseDto.getMovieSessionId());
         movieSession.setCinemaHall(cinemaHallService
                 .getCinemaHallById(movieSessionResponseDto.getCinemaHallId()));
         movieSession.setShowTime(movieSessionResponseDto.getDate());
