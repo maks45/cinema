@@ -1,6 +1,7 @@
 package com.durov.maks.cinema.service.impl;
 
 import com.durov.maks.cinema.dao.UserDao;
+import com.durov.maks.cinema.exception.AuthenticationException;
 import com.durov.maks.cinema.model.User;
 import com.durov.maks.cinema.service.ShoppingCartService;
 import com.durov.maks.cinema.service.UserService;
@@ -25,8 +26,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userDao.findByEmail(email);
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email).orElseThrow(() -> new AuthenticationException(String
+                .format("user with email: %s not found", email)));
     }
 
     @Override

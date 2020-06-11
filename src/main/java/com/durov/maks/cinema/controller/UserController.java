@@ -23,9 +23,7 @@ public class UserController {
 
     @GetMapping
     public UserResponseDto getUserByEmail(@RequestParam String email) {
-        return getUserResponseDto(userService.findByEmail(email)
-                .orElseThrow(() -> new AuthenticationException(String
-                        .format("user with email: %s not found", email))));
+        return getUserResponseDto(userService.findByEmail(email));
     }
 
     private UserResponseDto getUserResponseDto(User user) {
