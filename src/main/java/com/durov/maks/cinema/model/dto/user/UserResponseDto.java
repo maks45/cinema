@@ -2,7 +2,6 @@ package com.durov.maks.cinema.model.dto.user;
 
 public class UserResponseDto {
     private Long userId;
-    private Long shoppingCartId;
     private String email;
     private String login;
 
@@ -28,13 +27,5 @@ public class UserResponseDto {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public Long getShoppingCartId() {
-        return shoppingCartId;
-    }
-
-    public void setShoppingCartId(Long shoppingCartId) {
-        this.shoppingCartId = shoppingCartId;
     }
 }

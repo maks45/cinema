@@ -1,8 +1,8 @@
 package com.durov.maks.cinema.controller;
 
-import com.durov.maks.cinema.model.Order;
 import com.durov.maks.cinema.model.User;
 import com.durov.maks.cinema.model.dto.order.OrderResponseDto;
+import com.durov.maks.cinema.model.mapper.OrderMapper;
 import com.durov.maks.cinema.service.OrderService;
 import com.durov.maks.cinema.service.ShoppingCartService;
 import com.durov.maks.cinema.service.UserService;
@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
+    private final OrderMapper orderMapper;
     private final OrderService orderService;
     private final UserService userService;
     private final ShoppingCartService shoppingCartService;
 
-    public OrderController(OrderService orderService,
+    public OrderController(OrderMapper orderMapper, OrderService orderService,
                            UserService userService, ShoppingCartService shoppingCartService) {
+        this.orderMapper = orderMapper;
         this.orderService = orderService;
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
@@ -38,15 +40,7 @@ public class OrderController {
     @GetMapping
     public List<OrderResponseDto> getAllOrders(@RequestParam Long userId) {
         return orderService.getOrderHistory(userService.getUserById(userId)).stream()
-                .map(this::getOrderDto)
+                .map(orderMapper::getOrderDto)
                 .collect(Collectors.toList());
-    }
-
-    private OrderResponseDto getOrderDto(Order order) {
-        OrderResponseDto orderResponseDto = new OrderResponseDto();
-        orderResponseDto.setId(order.getId());
-        orderResponseDto.setOrderDate(order.getOrderDate());
-        orderResponseDto.setShoppingCartId(shoppingCartService.getByUser(order.getUser()).getId());
-        return orderResponseDto;
     }
 }

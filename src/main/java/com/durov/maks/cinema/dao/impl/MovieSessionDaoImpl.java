@@ -58,4 +58,20 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         }
         return movieSession;
     }
+
+    @Override
+    public MovieSession getMovieSessionById(Long movieSessionId) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<MovieSession> criteriaQuery = criteriaBuilder
+                    .createQuery(MovieSession.class);
+            Root<MovieSession> movieSessionRoot = criteriaQuery.from(MovieSession.class);
+            criteriaQuery.select(movieSessionRoot).where(criteriaBuilder
+                    .equal(movieSessionRoot.get("id"), movieSessionId));
+            return session.createQuery(criteriaQuery).getSingleResult();
+        } catch (HibernateException e) {
+            throw new DataProcessingException("can't get movie session entity with id: "
+                    + movieSessionId, e);
+        }
+    }
 }

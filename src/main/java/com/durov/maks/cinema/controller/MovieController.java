@@ -1,8 +1,8 @@
 package com.durov.maks.cinema.controller;
 
-import com.durov.maks.cinema.model.Movie;
 import com.durov.maks.cinema.model.dto.movie.MovieRequestDto;
 import com.durov.maks.cinema.model.dto.movie.MovieResponseDto;
+import com.durov.maks.cinema.model.mapper.MovieMapper;
 import com.durov.maks.cinema.service.MovieService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,31 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/movies")
 public class MovieController {
     private final MovieService movieService;
+    private final MovieMapper movieMapper;
 
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, MovieMapper movieMapper) {
         this.movieService = movieService;
+        this.movieMapper = movieMapper;
     }
 
     @PostMapping
     public void addMovie(@RequestBody MovieRequestDto movieRequestDto) {
-        Movie movie = new Movie();
-        movie.setTitle(movieRequestDto.getTitle());
-        movie.setDescription(movieRequestDto.getDescription());
-        movieService.add(movie);
+        movieService.add(movieMapper.getMovie(movieRequestDto));
     }
 
     @GetMapping
     public List<MovieResponseDto> getAllMovies() {
         return movieService.getAll().stream()
-                .map(this::getResponseMovieDto)
+                .map(movieMapper::getResponseMovieDto)
                 .collect(Collectors.toList());
-    }
-
-    private MovieResponseDto getResponseMovieDto(Movie movie) {
-        MovieResponseDto movieResponseDto = new MovieResponseDto();
-        movieResponseDto.setId(movie.getId());
-        movieResponseDto.setDescription(movie.getDescription());
-        movieResponseDto.setTitle(movie.getTitle());
-        return movieResponseDto;
     }
 }
