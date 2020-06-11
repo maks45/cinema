@@ -52,4 +52,13 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             throw new DataProcessingException("can't get all cinema hall entity", e);
         }
     }
+
+    @Override
+    public CinemaHall getById(Long cinemaHallId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(CinemaHall.class, cinemaHallId);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("can't get cinema hall with id " + cinemaHallId, e);
+        }
+    }
 }

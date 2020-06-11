@@ -56,4 +56,13 @@ public class UserDaoImpl implements UserDao {
             throw new DataProcessingException("can't get all movies entity", e);
         }
     }
+
+    @Override
+    public User getById(Long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(User.class, userId);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("can't get all movies entity", e);
+        }
+    }
 }
