@@ -40,5 +40,4 @@ public class ShoppingCartController {
         shoppingCartService.addSession(movieSessionService.getSessionById(movieSessionId),
                 userService.getUserById(userId));
     }
-
 }
