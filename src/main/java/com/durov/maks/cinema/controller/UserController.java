@@ -1,6 +1,5 @@
 package com.durov.maks.cinema.controller;
 
-import com.durov.maks.cinema.exception.AuthenticationException;
 import com.durov.maks.cinema.model.User;
 import com.durov.maks.cinema.model.dto.user.UserResponseDto;
 import com.durov.maks.cinema.service.ShoppingCartService;

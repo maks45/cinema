@@ -5,7 +5,6 @@ import com.durov.maks.cinema.exception.AuthenticationException;
 import com.durov.maks.cinema.model.User;
 import com.durov.maks.cinema.service.ShoppingCartService;
 import com.durov.maks.cinema.service.UserService;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
