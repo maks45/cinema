@@ -4,9 +4,7 @@ import com.durov.maks.cinema.dao.MovieDao;
 import com.durov.maks.cinema.exception.DataProcessingException;
 import com.durov.maks.cinema.model.Movie;
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -56,12 +54,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie getById(Long movieId) {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Movie> criteriaQuery = criteriaBuilder.createQuery(Movie.class);
-            Root<Movie> movieRoot = criteriaQuery.from(Movie.class);
-            criteriaQuery.select(movieRoot).where(criteriaBuilder
-                    .equal(movieRoot.get("id"), movieId));
-            return session.createQuery(criteriaQuery).getSingleResult();
+            return session.get(Movie.class, movieId);
         } catch (HibernateException e) {
             throw new DataProcessingException("can't get movie with id " + movieId, e);
         }

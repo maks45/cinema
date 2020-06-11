@@ -60,12 +60,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getById(Long userId) {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-            Root<User> userRoot = criteriaQuery.from(User.class);
-            criteriaQuery.select(userRoot).where(criteriaBuilder
-                    .equal(userRoot.get("id"), userId));
-            return session.createQuery(criteriaQuery).getSingleResult();
+            return session.get(User.class, userId);
         } catch (HibernateException e) {
             throw new DataProcessingException("can't get all movies entity", e);
         }
