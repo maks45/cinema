@@ -1,10 +1,9 @@
 package com.durov.maks.cinema.model.dto.user;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import com.durov.maks.cinema.validation.EmailValidate;
 import com.durov.maks.cinema.validation.PasswordsEquals;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @PasswordsEquals(
         password = "password",

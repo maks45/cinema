@@ -1,7 +1,7 @@
 package com.durov.maks.cinema.model.dto.moviesession;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 
 public class MovieSessionRequestDto {
     @NotNull(message = "date and time can't be null")
