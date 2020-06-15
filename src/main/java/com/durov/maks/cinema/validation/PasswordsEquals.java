@@ -15,10 +15,6 @@ public @interface PasswordsEquals {
 
     String message() default "password and repeat password should be same";
 
-    String password();
-
-    String repeatPassword();
-
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

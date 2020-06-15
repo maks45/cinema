@@ -5,10 +5,7 @@ import com.durov.maks.cinema.validation.PasswordsEquals;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@PasswordsEquals(
-        password = "password",
-        repeatPassword = "repeatPassword"
-)
+@PasswordsEquals
 public class UserRequestDto {
     @EmailValidate(message = "email invalid")
     @NotNull(message = "email can't be null")
