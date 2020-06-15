@@ -1,10 +1,14 @@
 package com.durov.maks.cinema.model.dto.moviesession;
 
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 
 public class MovieSessionRequestDto {
+    @NotNull(message = "date and time can't be null")
     private LocalDateTime date;
+    @NotNull(message = "movie id can't be null")
     private Long movieId;
+    @NotNull(message = "cinema hall id can't be null")
     private Long cinemaHallId;
 
     public Long getCinemaHallId() {
