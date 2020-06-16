@@ -1,37 +1,40 @@
 package com.durov.maks.cinema.security;
 
 import com.durov.maks.cinema.exception.AuthenticationException;
+import com.durov.maks.cinema.model.Role;
 import com.durov.maks.cinema.model.User;
 import com.durov.maks.cinema.service.UserService;
-import com.durov.maks.cinema.util.HashUtil;
+import java.util.Set;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserService userService;
-    private final HashUtil hashUtil;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationServiceImpl(UserService userService, HashUtil hashUtil) {
+    public AuthenticationServiceImpl(UserService userService,
+                                     PasswordEncoder passwordEncoder) {
         this.userService = userService;
-        this.hashUtil = hashUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
         User user = userService.findByEmail(email);
-        if (user.getPassword().equals(hashUtil.hashPassword(password, user.getSalt()))) {
+        if (user.getPassword().equals(passwordEncoder.encode(password))) {
             return user;
         }
         throw new AuthenticationException("Incorrect login or password");
     }
 
     @Override
-    public User register(String email, String login, String password) {
+    public User register(String email, String login, String password, Set<Role> roleSet) {
         User user = new User();
         user.setEmail(email);
         user.setLogin(login);
-        user.setSalt(hashUtil.getSalt());
-        user.setPassword(hashUtil.hashPassword(password, user.getSalt()));
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRoles(roleSet);
         return userService.add(user);
     }
 }

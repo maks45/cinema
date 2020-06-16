@@ -1,12 +1,10 @@
 package com.durov.maks.cinema.dao.impl;
 
-import com.durov.maks.cinema.dao.UserDao;
+import com.durov.maks.cinema.dao.RoleDao;
 import com.durov.maks.cinema.exception.DataProcessingException;
-import com.durov.maks.cinema.model.User;
-import java.util.Optional;
+import com.durov.maks.cinema.model.Role;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,56 +13,45 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class RoleDaoImpl implements RoleDao {
     private final SessionFactory sessionFactory;
 
-    public UserDaoImpl(SessionFactory sessionFactory) {
+    public RoleDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public User add(User user) {
+    public void add(Role role) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(user);
+            session.save(role);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("can't save user entity", e);
+            throw new DataProcessingException("can't save role entity", e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return user;
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Role getRoleByName(String roleName) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-            Root<User> userRoot = criteriaQuery.from(User.class);
-            userRoot.fetch("roles", JoinType.LEFT);
-            criteriaQuery.select(userRoot).where(criteriaBuilder
-                    .equal(userRoot.get("email"), email));
-            return session.createQuery(criteriaQuery).getResultStream().findFirst();
+            CriteriaQuery<Role> criteriaQuery = criteriaBuilder.createQuery(Role.class);
+            Root<Role> roleRoot = criteriaQuery.from(Role.class);
+            criteriaQuery.select(roleRoot).where(criteriaBuilder
+                    .equal(roleRoot.get("roleName"), Role.RoleName.valueOf(roleName)));
+            return session.createQuery(criteriaQuery).getSingleResult();
         } catch (HibernateException e) {
             throw new DataProcessingException("can't get all movies entity", e);
-        }
-    }
-
-    @Override
-    public User getById(Long userId) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(User.class, userId);
-        } catch (HibernateException e) {
-            throw new DataProcessingException("can't get user entity with id" + userId, e);
         }
     }
 }

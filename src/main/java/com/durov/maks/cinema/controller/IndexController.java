@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/inject-data")
-public class InjectDataController {
-
+@RequestMapping
+public class IndexController {
     @GetMapping
-    public String injectData() {
-        return "data injected";
+    public String sayHello() {
+        return "hello";
     }
 }
