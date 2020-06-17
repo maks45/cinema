@@ -16,8 +16,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
         "com.durov.maks.cinema.security",
         "com.durov.maks.cinema.model.mapper",
         "com.durov.maks.cinema.service",
-        "com.durov.maks.cinema.dao",
-        "com.durov.maks.cinema.util"
+        "com.durov.maks.cinema.dao"
 })
 public class AppConfig {
     private final Environment env;

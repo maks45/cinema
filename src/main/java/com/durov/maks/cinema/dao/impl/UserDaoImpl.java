@@ -6,6 +6,7 @@ import com.durov.maks.cinema.model.User;
 import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -49,6 +50,7 @@ public class UserDaoImpl implements UserDao {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
             Root<User> userRoot = criteriaQuery.from(User.class);
+            userRoot.fetch("roles", JoinType.LEFT);
             criteriaQuery.select(userRoot).where(criteriaBuilder
                     .equal(userRoot.get("email"), email));
             return session.createQuery(criteriaQuery).getResultStream().findFirst();
@@ -62,7 +64,7 @@ public class UserDaoImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             return session.get(User.class, userId);
         } catch (HibernateException e) {
-            throw new DataProcessingException("can't get all movies entity", e);
+            throw new DataProcessingException("can't get user entity with id" + userId, e);
         }
     }
 }
