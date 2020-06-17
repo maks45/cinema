@@ -13,11 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
-
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -36,8 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/movie-sessions/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/orders/**").authenticated()
                 .antMatchers(HttpMethod.GET,"/orders/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/shopping-carts/**").authenticated()
-                .antMatchers(HttpMethod.GET,"/shopping-carts/**").authenticated()
+                .antMatchers("/shopping-carts/**").authenticated()
                 .antMatchers(HttpMethod.GET,"/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST,"/movies/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/movies/**").authenticated()

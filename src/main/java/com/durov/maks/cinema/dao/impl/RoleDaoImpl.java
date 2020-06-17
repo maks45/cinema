@@ -51,7 +51,7 @@ public class RoleDaoImpl implements RoleDao {
                     .equal(roleRoot.get("roleName"), Role.RoleName.valueOf(roleName)));
             return session.createQuery(criteriaQuery).getSingleResult();
         } catch (HibernateException e) {
-            throw new DataProcessingException("can't get all movies entity", e);
+            throw new DataProcessingException("can't get role entity by name" + roleName, e);
         }
     }
 }

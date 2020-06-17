@@ -22,7 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException {
         User user = userService.findByEmail(email);
-        if (user.getPassword().equals(passwordEncoder.encode(password))) {
+        if (passwordEncoder.matches(password,user.getPassword())) {
             return user;
         }
         throw new AuthenticationException("Incorrect login or password");
