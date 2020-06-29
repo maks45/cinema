@@ -23,7 +23,7 @@ public class InjectController {
         roleService.add(userRole);
         Role adminRole = Role.of("ADMIN");
         roleService.add(adminRole);
-        authenticationService.register("maks@gmail.com", "mask45",
+        authenticationService.register("admin@gmail.com", "mask45",
                 "1111", Set.of(adminRole, userRole));
     }
 }
