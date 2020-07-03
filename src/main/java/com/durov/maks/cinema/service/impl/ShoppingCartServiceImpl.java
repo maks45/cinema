@@ -6,7 +6,6 @@ import com.durov.maks.cinema.model.MovieSession;
 import com.durov.maks.cinema.model.ShoppingCart;
 import com.durov.maks.cinema.model.Ticket;
 import com.durov.maks.cinema.model.User;
-import com.durov.maks.cinema.service.MovieSessionService;
 import com.durov.maks.cinema.service.ShoppingCartService;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
